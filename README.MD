@@ -16,7 +16,7 @@
 
 ## 🎬 Видео-демонстрация
 
-<video src="assets/demo.mp4" controls width="100%"></video>
+[![Посмотреть видео](assets/light-theme.png)](assets/demo.mp4)
 
 *(Если видео не воспроизводится, нажмите на ссылку: [Скачать видео](assets/demo.mp4))*
 
