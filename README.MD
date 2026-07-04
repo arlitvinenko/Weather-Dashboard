@@ -6,7 +6,8 @@
   <img src="https://img.shields.io/badge/Responsive-Yes-brightgreen?style=for-the-badge" alt="Responsive">
   <img src="https://img.shields.io/badge/Dark%20Mode-Yes-brightgreen?style=for-the-badge" alt="Dark Mode">
 </p>
-# 🌤️ Weather Dashboard
+
+## 🌤️ Weather Dashboard
 
 > Адаптивный дашборд погоды с поддержкой светлой/темной темы, интерактивными графиками и интеграцией с OpenWeatherMap API.
 
