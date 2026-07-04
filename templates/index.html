@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather Dashboard | Modern UI</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body data-theme="dark">
+    <div class="container">
+        <!-- Хедер с кнопкой переключения темы -->
+        <header data-aos="fade-down" data-aos-duration="1000">
+            <div class="logo">
+                <div class="logo-icon">
+                    <i class="fas fa-cloud-sun"></i>
+                </div>
+                <h1>Weather<span>Dashboard</span></h1>
+            </div>
+            <div class="search">
+                <input type="text" id="cityInput" placeholder="Введите город..." value="Москва">
+                <button id="searchBtn"><i class="fas fa-search"></i> Найти</button>
+                <button id="themeToggle" class="theme-btn" title="Переключить тему">
+                    <i class="fas fa-sun"></i>
+                </button>
+                <button id="refreshBtn" class="refresh-btn" title="Обновить данные">
+                    <i class="fas fa-sync-alt"></i>
+                </button>
+            </div>
+        </header>
+
+        <main>
+            <!-- Текущая погода с картой -->
+            <section id="currentWeather" class="fade-in" data-aos="fade-up" data-aos-delay="100">
+                <div class="section-badge"><i class="fas fa-circle"></i> Live данные</div>
+                <h2 class="section-title">Текущая погода</h2>
+                
+                <div class="weather-map-grid">
+                    <!-- Карточка погоды -->
+                    <div class="weather-card glass">
+                        <div class="weather-main">
+                            <div class="weather-left">
+                                <div class="city-header">
+                                    <div class="city-name" id="cityName">Загрузка...</div>
+                                    <button id="favoriteBtn" class="favorite-btn" title="Добавить в избранное">
+                                        <i class="far fa-star"></i>
+                                    </button>
+                                </div>
+                                <div class="date" id="date"></div>
+                                
+                                <div class="temp-display">
+                                    <div class="temp-icon-wrapper">
+                                        <i id="weatherIcon" class="fas fa-sun"></i>
+                                    </div>
+                                    <div class="temp" id="temp">--°C</div>
+                                </div>
+                                <div class="desc" id="desc">--</div>
+                                <div class="feels-like" id="feelsLike">Ощущается как: --°C</div>
+                            </div>
+                            
+                            <div class="weather-right">
+                                <div class="detail-item"><i class="fas fa-tint"></i><span>Влажность</span><span id="humidity" class="value">--%</span></div>
+                                <div class="detail-item"><i class="fas fa-wind"></i><span>Ветер</span><span id="wind" class="value">-- м/с</span></div>
+                                <div class="detail-item"><i class="fas fa-gauge-high"></i><span>Давление</span><span id="pressure" class="value">-- гПа</span></div>
+                                <div class="detail-item"><i class="fas fa-sun"></i><span>Восход</span><span id="sunrise" class="value">--:--</span></div>
+                                <div class="detail-item"><i class="fas fa-moon"></i><span>Закат</span><span id="sunset" class="value">--:--</span></div>
+                                <div class="detail-item advice-item" id="adviceItem">
+                                    <i class="fas fa-tshirt"></i>
+                                    <span>Совет</span>
+                                    <span id="clothingAdvice" class="value">--</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Карта -->
+                    <div class="map-card glass">
+                        <iframe id="osmMap"
+                            width="100%"
+                            height="100%"
+                            frameborder="0"
+                            scrolling="no"
+                            src="https://www.openstreetmap.org/export/embed.html?bbox=37.6173%2C55.7558%2C37.6173%2C55.7558&layer=mapnik&marker=55.7558%2C37.6173">
+                        </iframe>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Избранные города -->
+            <section id="favoritesSection" data-aos="fade-up" data-aos-delay="200">
+                <div class="glass" style="padding: 16px 24px;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px;">
+                        <h3 style="font-weight: 500; font-size: 0.9rem; color: var(--text-secondary);">
+                            <i class="fas fa-star" style="color: #f1c40f;"></i> Быстрый доступ
+                        </h3>
+                    </div>
+                    <div id="favoritesList" style="display: flex; flex-wrap: wrap; gap: 8px; margin-top: 8px;">
+                        <!-- кнопки -->
+                    </div>
+                </div>
+            </section>
+
+            <!-- График температуры -->
+            <section id="chartSection" data-aos="fade-up" data-aos-delay="300">
+                <div class="section-badge"><i class="fas fa-circle"></i> Аналитика</div>
+                <h2 class="section-title">Прогноз температуры</h2>
+                <div class="chart-card glass">
+                    <div class="chart-container">
+                        <canvas id="tempChart"></canvas>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Прогноз по дням -->
+            <section id="forecast" data-aos="fade-up" data-aos-delay="400">
+                <div class="section-badge"><i class="fas fa-circle"></i> На 5 дней</div>
+                <h2 class="section-title">Прогноз погоды</h2>
+                <div id="forecastContainer" class="forecast-grid"></div>
+            </section>
+
+            <!-- История запросов -->
+            <section id="history" data-aos="fade-up" data-aos-delay="500">
+                <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px;">
+                    <div>
+                        <div class="section-badge" style="margin-top:0;"><i class="fas fa-circle"></i> Лог</div>
+                        <h2 class="section-title" style="margin-top:5px;">История запросов</h2>
+                    </div>
+                    <button id="clearHistoryBtn" class="clear-btn">
+                        <i class="fas fa-trash-can"></i> Очистить
+                    </button>
+                </div>
+                <div id="historyContainer" class="glass" style="margin-top: 20px; padding: 16px;"></div>
+            </section>
+        </main>
+
+        <footer>
+            <p>Данные предоставлены <a href='https://home.openweathermap.org/' target="_blank">OpenWeatherMap</a></p>
+        </footer>
+    </div>
+
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+    <script src="/static/script.js"></script>
+</body>
+</html>
