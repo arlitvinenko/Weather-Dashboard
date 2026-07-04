@@ -1,3 +1,11 @@
+<p align="center">
+  <img src="https://img.shields.io/badge/Python-3.10+-blue?style=for-the-badge&logo=python" alt="Python">
+  <img src="https://img.shields.io/badge/Flask-2.0+-blue?style=for-the-badge&logo=flask" alt="Flask">
+  <img src="https://img.shields.io/badge/OpenWeatherMap-API-orange?style=for-the-badge&logo=openweathermap" alt="OpenWeatherMap">
+  <img src="https://img.shields.io/badge/Chart.js-v4-green?style=for-the-badge&logo=chart.js" alt="Chart.js">
+  <img src="https://img.shields.io/badge/Responsive-Yes-brightgreen?style=for-the-badge" alt="Responsive">
+  <img src="https://img.shields.io/badge/Dark%20Mode-Yes-brightgreen?style=for-the-badge" alt="Dark Mode">
+</p>
 # 🌤️ Weather Dashboard
 
 > Адаптивный дашборд погоды с поддержкой светлой/темной темы, интерактивными графиками и интеграцией с OpenWeatherMap API.
