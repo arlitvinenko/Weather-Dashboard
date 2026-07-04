@@ -1,0 +1,374 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+#favoritesSection {
+    margin-top: 2.5%;
+}
+#chartSection {
+    margin-top: 2.5%;
+}
+#forecast {
+    margin-top: 2.5%;
+}
+#history {
+    margin-top: 2.5%;
+}
+
+/* ===== ПЕРЕМЕННЫЕ ТЕМ ===== */
+:root {
+    --bg-primary: #0A0F1E;
+    --bg-secondary: #1a102b;
+    --bg-glass: rgba(15, 23, 42, 0.7);
+    --text-primary: #F1F5F9;
+    --text-secondary: #94A3B8;
+    --border-glass: rgba(255, 255, 255, 0.06);
+    --shadow-glass: 0 8px 32px rgba(0,0,0,0.3);
+    --input-bg: rgba(0,0,0,0.3);
+    --gradient-start: #0A0F1E;
+    --gradient-mid: #1a102b;
+    --gradient-end: #0b1f2e;
+}
+
+/* Светлая тема (Light) */
+[data-theme="light"] {
+    --bg-primary: #f1f5f9;
+    --bg-secondary: #ffffff;
+    --bg-glass: rgba(255, 255, 255, 0.8);
+    --text-primary: #0f172a;
+    --text-secondary: #475569;
+    --border-glass: rgba(0, 0, 0, 0.06);
+    --shadow-glass: 0 8px 32px rgba(0,0,0,0.05);
+    --input-bg: #ffffff;
+    --gradient-start: #f1f5f9;
+    --gradient-mid: #e2e8f0;
+    --gradient-end: #cbd5e1;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    min-height: 100vh;
+    padding: 30px 20px;
+    background: linear-gradient(-45deg, var(--gradient-start), var(--gradient-mid), var(--gradient-start), var(--gradient-end));
+    background-size: 400% 400%;
+    animation: gradientBG 15s ease infinite;
+    color: var(--text-primary);
+    transition: background 0.4s ease, color 0.3s ease;
+}
+
+@keyframes gradientBG {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+.container { max-width: 1200px; margin: 0 auto; }
+
+/* ===== ХЕДЕР ===== */
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 20px;
+    padding: 20px 30px;
+    margin-bottom: 40px;
+    background: var(--bg-glass);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border-radius: 30px;
+    border: 1px solid var(--border-glass);
+}
+.logo { display: flex; align-items: center; gap: 15px; }
+.logo-icon {
+    width: 50px; height: 50px;
+    background: linear-gradient(135deg, #8B5CF6, #D946EF);
+    border-radius: 16px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.5rem; color: white;
+    box-shadow: 0 8px 32px rgba(139,92,246,0.4);
+}
+.logo h1 { font-size: 1.8rem; font-weight: 700; letter-spacing: -0.5px; }
+.logo h1 span { 
+    background: linear-gradient(135deg, #8B5CF6, #D946EF);
+    -webkit-background-clip: text; background-clip: text; color: transparent;
+}
+
+/* ===== ПОИСК ===== */
+.search { display: flex; gap: 12px; align-items: center; flex-wrap: wrap; }
+.search input {
+    padding: 14px 22px; border-radius: 40px;
+    border: 1px solid var(--border-glass);
+    background: var(--input-bg);
+    color: var(--text-primary);
+    font-family: 'Inter', sans-serif; font-size: 0.95rem;
+    width: 240px; outline: none; transition: all 0.3s ease;
+}
+.search input:focus { border-color: #8B5CF6; box-shadow: 0 0 0 4px rgba(139,92,246,0.15); }
+.search input::placeholder { color: var(--text-secondary); }
+.search button, .theme-btn, .refresh-btn {
+    padding: 14px 24px; border-radius: 40px; border: none; cursor: pointer;
+    font-family: 'Inter', sans-serif; font-weight: 600; transition: 0.3s;
+}
+.search button {
+    background: linear-gradient(135deg, #8B5CF6, #D946EF); color: white;
+    box-shadow: 0 4px 20px rgba(139,92,246,0.3); display: flex; align-items: center; gap: 8px;
+}
+.search button:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(139,92,246,0.6); }
+
+.theme-btn, .refresh-btn {
+    width: 48px; height: 48px;
+    background: var(--bg-glass); color: var(--text-primary);
+    border: 1px solid var(--border-glass);
+    display: flex; align-items: center; justify-content: center; font-size: 1.1rem;
+}
+.theme-btn:hover, .refresh-btn:hover { background: rgba(139,92,246,0.2); border-color: #8B5CF6; }
+.refresh-btn:hover { transform: rotate(120deg); }
+
+/* ===== СТЕКЛО И СЕКЦИИ ===== */
+.glass {
+    background: var(--bg-glass);
+    backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+    border: 1px solid var(--border-glass);
+    border-radius: 28px; padding: 28px;
+    transition: all 0.3s ease; box-shadow: var(--shadow-glass);
+}
+.glass:hover { border-color: rgba(139,92,246,0.15); box-shadow: 0 12px 48px rgba(0,0,0,0.2); }
+
+.section-badge {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: rgba(139,92,246,0.15); border: 1px solid rgba(139,92,246,0.2);
+    padding: 6px 14px; border-radius: 20px;
+    font-size: 0.75rem; font-weight: 600; color: #8B5CF6;
+    text-transform: uppercase; letter-spacing: 1px;
+    margin-top: 0; margin-bottom: 8px;
+}
+.section-title {
+    font-weight: 600; font-size: 1.6rem; letter-spacing: -0.5px;
+    background: linear-gradient(to right, var(--text-primary), var(--text-secondary));
+    -webkit-background-clip: text; background-clip: text; color: transparent;
+    margin-top: 0; margin-bottom: 25px;
+}
+
+/* ===== СЕТКА ПОГОДА + КАРТА ===== */
+.weather-map-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 25px;
+    align-items: stretch;
+}
+.map-card { padding: 8px; overflow: hidden; display: flex; flex-direction: column; }
+#osmMap { flex-grow: 1; min-height: 320px; width: 100%; border: none; border-radius: 24px; }
+
+/* ===== ДЕТАЛИ ПОГОДЫ ===== */
+.weather-main { 
+    display: flex; 
+    flex-direction: column;     
+    align-items: center;        
+    width: 100%;
+    gap: 20px;
+}
+.weather-left { flex: unset; display: flex; flex-direction: column; align-items: center; width: 100%; }
+.city-header { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; justify-content: center; margin-bottom: 2px; }
+.city-name { font-size: 2.2rem; font-weight: 700; letter-spacing: -1px; line-height: 1.1; text-align: center; }
+.date { color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 16px; text-align: center; }
+
+.temp-display { display: flex; align-items: center; gap: 16px; margin: 10px 0 4px 0; justify-content: center; }
+.temp-icon-wrapper {
+    width: 70px; height: 70px;
+    background: rgba(139,92,246,0.1); border-radius: 20px;
+    display: flex; align-items: center; justify-content: center;
+}
+#weatherIcon { font-size: 40px; }
+.temp { font-size: 4rem; font-weight: 800; color: #8B5CF6; letter-spacing: -2px; line-height: 1; }
+.desc { font-size: 1.2rem; color: var(--text-secondary); font-weight: 500; text-transform: capitalize; text-align: center; }
+.feels-like { font-size: 0.9rem; color: var(--text-secondary); margin-top: 4px; text-align: center; }
+
+.weather-right {
+    width: 100%;                
+    margin-top: 8px;
+    display: grid; 
+    grid-template-columns: 1fr 1fr 1fr; 
+    gap: 10px;
+    flex: none;                 
+    min-width: auto;            
+}
+.detail-item {
+    display: flex; align-items: center; gap: 10px; padding: 10px 14px;
+    background: var(--bg-secondary); border-radius: 16px; border: 1px solid var(--border-glass);
+    justify-content: space-between; 
+}
+.detail-item i { color: #8B5CF6; width: 20px; text-align: center; font-size: 0.9rem; }
+.detail-item span { color: var(--text-secondary); font-size: 0.8rem; font-weight: 500; }
+.detail-item .value { 
+    color: var(--text-primary); font-weight: 600; font-size: 0.9rem;
+    max-width: 90px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+
+/* ===== ИЗБРАННОЕ, ГРАФИК, ПРОГНОЗ ===== */
+.favorite-btn { background: none; border: none; color: var(--text-secondary); font-size: 1.6rem; cursor: pointer; transition: 0.3s; }
+.favorite-btn:hover { transform: scale(1.2); }
+.favorite-btn.active { color: #f1c40f; }
+
+.fav-city-btn {
+    background: var(--bg-secondary); border: 1px solid var(--border-glass); border-radius: 30px;
+    padding: 8px 18px; color: var(--text-primary); cursor: pointer; transition: 0.3s;
+    font-size: 0.9rem; display: inline-flex; align-items: center; gap: 8px;
+}
+.fav-city-btn:hover { background: rgba(139,92,246,0.2); border-color: #8B5CF6; transform: translateY(-2px); }
+.fav-city-btn .remove-fav { color: var(--text-secondary); font-size: 0.8rem; }
+.fav-city-btn .remove-fav:hover { color: #ef4444; }
+
+.chart-card { padding: 20px; }
+.chart-container { position: relative; height: 240px; width: 100%; }
+
+.forecast-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 18px;
+}
+.forecast-card {
+    background: var(--bg-secondary); backdrop-filter: blur(8px); border: 1px solid var(--border-glass);
+    border-radius: 24px; padding: 20px 12px; text-align: center; transition: all 0.3s ease;
+}
+.forecast-card:hover { transform: translateY(-6px); border-color: rgba(139,92,246,0.4); box-shadow: 0 12px 30px rgba(0,0,0,0.2); }
+.forecast-card .day { font-weight: 600; color: var(--text-secondary); font-size: 0.85rem; }
+.forecast-card .forecast-icon { font-size: 2.4rem; margin: 10px 0; }
+.forecast-card .forecast-temp { font-size: 1.6rem; font-weight: 700; color: #8B5CF6; }
+.forecast-card .forecast-desc { font-size: 0.8rem; color: var(--text-secondary); margin-top: 4px; }
+
+/* ===== ИСТОРИЯ ===== */
+#historyContainer { overflow-x: auto; }
+#historyContainer table { width: 100%; border-collapse: collapse; font-size: 0.9rem; }
+#historyContainer th { text-align: left; padding: 12px 16px; color: var(--text-secondary); border-bottom: 1px solid var(--border-glass); font-weight: 500; }
+#historyContainer td { padding: 10px 16px; border-bottom: 1px solid var(--border-glass); color: var(--text-primary); }
+#historyContainer tr:hover td { background: rgba(139,92,246,0.05); }
+.clear-btn { background: var(--bg-secondary); border: 1px solid var(--border-glass); color: var(--text-secondary); padding: 10px 20px; border-radius: 30px; cursor: pointer; transition: 0.3s; font-family: 'Inter', sans-serif; font-weight: 500; }
+.clear-btn:hover { background: rgba(239,68,68,0.15); border-color: #ef4444; color: #ef4444; }
+
+/* ===== ФУТЕР ===== */
+footer { margin-top: 60px; padding: 20px 0; text-align: center; border-top: 1px solid var(--border-glass); }
+footer p { color: var(--text-secondary); font-size: 0.85rem; font-weight: 500; }
+footer a { color: #8B5CF6; text-decoration: none; }
+
+/* =========================================================== */
+/* ===== АДАПТИВ (ПОЛНОСТЬЮ ПРОРАБОТАННЫЙ ДЛЯ МОБИЛОК) ===== */
+/* =========================================================== */
+
+/* Планшеты и средние экраны */
+@media (max-width: 992px) {
+    .weather-map-grid { grid-template-columns: 1fr; }
+    .search input { width: 180px; }
+}
+
+/* Маленькие ноутбуки и вертикальные планшеты */
+@media (max-width: 820px) {
+    .forecast-grid { grid-template-columns: repeat(auto-fit, minmax(110px, 1fr)); }
+}
+
+/* Телефоны (все смартфоны) */
+@media (max-width: 768px) {
+    body { padding: 15px 10px; }
+    
+    /* Шапка */
+    header { flex-direction: column; align-items: stretch; padding: 15px 20px; gap: 15px; }
+    .logo { justify-content: center; }
+    .logo h1 { font-size: 1.4rem; }
+    .logo-icon { width: 40px; height: 40px; font-size: 1.2rem; }
+    
+    /* Поиск */
+    .search { flex-direction: row; flex-wrap: wrap; }
+    .search input { 
+        width: 100%; 
+        padding: 12px 18px; 
+        font-size: 0.9rem; 
+        flex: 1 1 100%; 
+        order: 2; /* Переносим инпут на новую строку под кнопки */
+    }
+    .search button, .theme-btn, .refresh-btn {
+        padding: 10px 16px;
+        font-size: 0.9rem;
+    }
+    .search button {
+        flex: 1; 
+        justify-content: center;
+    }
+    .theme-btn, .refresh-btn {
+        width: 42px; 
+        height: 42px;
+    }
+
+    /* Заголовки */
+    .section-title { font-size: 1.3rem; margin-bottom: 15px; }
+    .section-badge { font-size: 0.65rem; padding: 4px 12px; }
+
+    /* Карточка погоды */
+    .glass { padding: 18px; }
+    .weather-main { gap: 15px; }
+    .city-name { font-size: 1.8rem; }
+    .temp { font-size: 3.2rem; }
+    .temp-icon-wrapper { width: 60px; height: 60px; }
+    #weatherIcon { font-size: 32px; }
+    .desc { font-size: 1rem; }
+    .feels-like { font-size: 0.85rem; }
+
+    /* Блок с деталями (перестраиваем в 2 колонки) */
+    .weather-right {
+        grid-template-columns: 1fr 1fr; 
+        gap: 8px;
+    }
+    .detail-item {
+        padding: 8px 12px;
+        gap: 6px;
+        font-size: 0.85rem;
+    }
+    .detail-item i { font-size: 0.8rem; width: 16px; }
+    .detail-item span { font-size: 0.75rem; }
+    .detail-item .value { 
+        font-size: 0.85rem; 
+        max-width: 70px; /* Уменьшаем ширину текста на телефонах */
+    }
+
+    /* Карта */
+    #osmMap { min-height: 220px; }
+
+    /* График */
+    .chart-container { height: 160px; }
+    
+    /* Прогноз */
+    .forecast-grid { 
+        grid-template-columns: repeat(auto-fit, minmax(90px, 1fr)); 
+        gap: 12px; 
+    }
+    .forecast-card { padding: 14px 8px; }
+    .forecast-card .forecast-icon { font-size: 2rem; }
+    .forecast-card .forecast-temp { font-size: 1.3rem; }
+    .forecast-card .day { font-size: 0.75rem; }
+    
+    /* История */
+    #historyContainer { padding: 10px; }
+    #historyContainer th, #historyContainer td { 
+        padding: 8px 10px; 
+        font-size: 0.8rem; 
+        white-space: nowrap;
+    }
+    .clear-btn { padding: 8px 14px; font-size: 0.85rem; }
+    
+    /* Футер */
+    footer { margin-top: 40px; padding: 15px 0; }
+}
+
+/* Очень маленькие телефоны (iPhone SE, старые Android) */
+@media (max-width: 400px) {
+    body { padding: 10px 6px; }
+    .glass { padding: 14px; }
+    .logo h1 { font-size: 1.2rem; }
+    .logo-icon { width: 34px; height: 34px; font-size: 1rem; }
+    .city-name { font-size: 1.5rem; }
+    .temp { font-size: 2.6rem; }
+    .weather-right { gap: 5px; }
+    .detail-item { padding: 6px 10px; }
+    .detail-item .value { max-width: 50px; font-size: 0.75rem; }
+    .forecast-grid { grid-template-columns: 1fr 1fr; gap: 8px; }
+    #osmMap { min-height: 160px; }
+}
